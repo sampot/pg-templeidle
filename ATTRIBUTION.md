@@ -15,3 +15,7 @@
 
 ## 類型
 - 增量／放置：香火累積、建築升級、離線收益。
+
+## Original release work
+
+The interface graphics, canvas art, synthesized music, and sound effects in this release are original procedural work created for **香火長明**. The third-party packs listed above remain bundled for provenance but are not loaded at runtime.
