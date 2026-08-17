@@ -1,20 +1,20 @@
-const KEY = "/api/kv/pg-templeidle:progress";
+const SAVE_KEY = "templeidle:save";
 
-export async function loadProgress(fetcher = fetch) {
+export async function loadSave() {
   try {
-    const res = await fetcher(KEY);
-    if (!res.ok) return {};
-    const text = await res.text();
-    if (!text) return {};
-    return JSON.parse(text);
+    await globalThis.PG.ready;
+    const raw = await globalThis.PG.kv.get(SAVE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
   } catch {
-    return {};
+    return null;
   }
 }
 
-export async function saveProgress(data, fetcher = fetch) {
+export async function saveSave(state, onError) {
   try {
-    await fetcher(KEY, { method: "PUT", body: JSON.stringify(data) });
-  } catch {}
-  return data;
+    await globalThis.PG.kv.put(SAVE_KEY, JSON.stringify(state));
+  } catch (error) {
+    onError?.(error);
+  }
 }

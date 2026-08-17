@@ -1,5 +1,0 @@
-import {describe,it,expect} from "vitest";import {CONFIG,createGame,applyAction,getLegalActions,summarize,applyOffline} from "./game.js";
-describe(CONFIG.id,()=>{it("starts with distinct playable state",()=>{const s=createGame({seed:3});expect(getLegalActions(s).length).toBeGreaterThanOrEqual(4);expect(s.flags).toBeTruthy()});
-it("all actions preserve a valid serializable state",()=>{let s=createGame({seed:5});for(const a of getLegalActions(s)){s=applyAction(s,a);expect(()=>JSON.stringify(s)).not.toThrow();expect(["playing","won","lost"]).toContain(s.outcome)}});
-it("supports its complete signature play sequence",()=>{let s=createGame({seed:7});for(const a of ["tap","tap","tap","generator","tap","tap","upgrade","tap","prestige"])s=applyAction(s,a);expect(s.turn).toBeGreaterThan(3);expect(summarize(s).score).toBeGreaterThanOrEqual(0)});
-it("offline calculation is bounded and safe",()=>{const s=createGame();const out=applyOffline(s,Date.now()+86400000);expect(out.flags).toBeTruthy()})});

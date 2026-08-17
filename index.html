@@ -1,1 +1,121 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b0d10"><link rel="stylesheet" href="./styles.css"><title>Game</title></head><body><main><header><div><small id="genre"></small><h1 id="title"></h1></div><button id="sound" aria-pressed="false">♫ 音效</button></header><section id="intro"><div class="sigil">◆</div><p id="help"></p><button id="start" class="primary">進入遊戲</button><a href="./ATTRIBUTION.md">製作與素材署名</a></section><section id="game" hidden><div id="stats"></div><div id="scene"></div><p id="message" aria-live="polite"></p><div id="actions"></div></section></main><script type="module" src="./app.js"></script></body></html>
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#1a1208" />
+    <meta name="description" content="香火長明：點香、建築升級、離線聚香，重修金身讓廟宇香火不滅。" />
+    <title>香火長明</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="sky-glow" aria-hidden="true"></div>
+    <main>
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">放置經營</p>
+          <h1>香火長明</h1>
+        </div>
+        <button id="sound-toggle" class="icon-button" type="button" aria-pressed="true">
+          ♪ 音樂開
+        </button>
+      </header>
+
+      <section id="intro" class="panel intro">
+        <img class="intro-icon" src="./assets/images/burner.png" alt="" />
+        <h2>廟裡香火，日夜不熄</h2>
+        <p>
+          點香爐添一炷香，建造香爐讓香火自動聚攢。升級鐘樓、正殿與長明燈，離線回來也能收穫。累積夠多，可重修金身取得永久加成。
+        </p>
+        <button id="start-button" class="primary big" type="button">入廟點香</button>
+        <button id="about-link" class="text-link" type="button">製作與素材署名</button>
+      </section>
+
+      <section id="game" hidden>
+        <div class="hud" aria-label="遊戲狀態">
+          <div class="hud-main">
+            <img src="./assets/images/incense.png" alt="" class="hud-icon" />
+            <div>
+              <span>香火</span>
+              <strong id="incense-value">0</strong>
+            </div>
+          </div>
+          <div>
+            <span>自動</span>
+            <strong id="rate-value">0/秒</strong>
+          </div>
+          <div>
+            <span>廟階</span>
+            <strong id="tier-value">一階草廟</strong>
+          </div>
+          <div>
+            <span>金身</span>
+            <strong id="prestige-value">×1.00</strong>
+          </div>
+        </div>
+
+        <section id="offline-banner" class="offline-banner panel" hidden>
+          <div>
+            <strong>離線香火待收</strong>
+            <p id="offline-text"></p>
+          </div>
+          <button id="claim-offline" class="primary" type="button">收取</button>
+        </section>
+
+        <section class="temple-scene panel" aria-label="廟宇場景">
+          <div class="lantern-row" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div id="building-row" class="building-row" aria-hidden="true"></div>
+          <button id="tap-button" class="tap-button" type="button" aria-label="點香添一炷">
+            <img src="./assets/images/burner.png" alt="" />
+            <span>點香</span>
+            <small id="tap-yield">+0</small>
+          </button>
+          <p id="scene-message" class="scene-message" aria-live="polite"></p>
+        </section>
+
+        <section class="shop panel" aria-label="建築升級">
+          <h2>建築與升級</h2>
+          <div id="shop-list" class="shop-list"></div>
+        </section>
+
+        <section class="footer-actions">
+          <button id="prestige-button" class="ghost" type="button">重修金身</button>
+          <p id="status-line" class="status-line" aria-live="polite"></p>
+        </section>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+    <dialog id="about-sheet" class="sheet">
+      <form method="dialog">
+        <h2>製作與素材署名</h2>
+        <ul>
+          <li>Kenney Board Game Icons（CC0）— 建築圖示</li>
+          <li>Kenney Tiny Farm（CC0）— 場景貼圖</li>
+          <li>Kenney UI Audio（CC0）— 介面音效</li>
+          <li>HydroGene — Spirits Forest loop — 背景音樂</li>
+        </ul>
+        <p>完整列表見 <code>ATTRIBUTION.md</code>。</p>
+        <button class="primary" value="close">關閉</button>
+      </form>
+    </dialog>
+
+    <dialog id="prestige-sheet" class="sheet">
+      <form method="dialog" id="prestige-form">
+        <h2>重修金身</h2>
+        <p id="prestige-copy">
+          重置香爐與建築，取得永久香火倍率。需累積 500 香火且至少 5 座香爐。
+        </p>
+        <div class="sheet-actions">
+          <button class="ghost" value="cancel">暫不重修</button>
+          <button id="confirm-prestige" class="primary" value="confirm">確認重修</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
